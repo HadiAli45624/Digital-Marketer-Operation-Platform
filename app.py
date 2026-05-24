@@ -41,10 +41,12 @@ def generate_copy():
     I want you to separate them with a line ###COPY_END###
 
     Use the product name only as a reference. The copy should be driven by the main focus, product info, and 
-    target audience — not the name itself"""
+    target audience — not the name itself
+    
+    Keep a predictable pattern, Do not write 'Copy:' or 'Body:' etc. You are generating for copied usage."""
 
     response = client.chat.completions.create(
-        model = 'llama-3.3-70b-versatile',
+        model = 'openai/gpt-oss-120b',
         messages = [{'role': 'user', 'content': text}]
     )
 

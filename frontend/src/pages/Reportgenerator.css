@@ -1,0 +1,260 @@
+.report-page {
+  max-width: 1100px;
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  margin-bottom: 2.5rem;
+}
+
+.page-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #F97316;
+  margin-bottom: 0.4rem;
+}
+
+.page-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
+  margin-bottom: 0.4rem;
+}
+
+.page-subtitle {
+  font-size: 0.93rem;
+  color: #6B6560;
+  line-height: 1.6;
+}
+
+/* ── LAYOUT ── */
+.report-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .report-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── FORM SECTIONS ── */
+.form-section {
+  background: #fff;
+  border: 1px solid #E0D9CF;
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4A4540;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  color: #1A1A1A;
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #F97316;
+  background: #fff;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #B0A99F;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* ── MORE OPTIONS ── */
+.more-options-btn {
+  background: none;
+  border: 1px dashed #E0D9CF;
+  border-radius: 8px;
+  width: 100%;
+  padding: 0.6rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.more-options-btn:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+/* ── ERROR ── */
+.form-error {
+  font-size: 0.83rem;
+  color: #E53E3E;
+  margin-bottom: 0.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── SUBMIT ── */
+.btn-submit {
+  width: 100%;
+  background: #F97316;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: #EA6A0A;
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── OUTPUT ── */
+.report-output-col {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.copy-btn {
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 7px;
+  padding: 0.35rem 0.85rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.copy-btn:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.output-box {
+  background: #fff;
+  border: 1px solid #E0D9CF;
+  border-radius: 14px;
+  padding: 1.5rem;
+  min-height: 480px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.output-box.has-content {
+  align-items: flex-start;
+}
+
+.output-placeholder {
+  font-size: 0.88rem;
+  color: #B0A99F;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: auto;
+  align-self: center;
+  width: 100%;
+  text-align: center;
+}
+
+.output-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: auto;
+  width: 100%;
+}
+
+.output-loading p {
+  font-size: 0.88rem;
+  color: #6B6560;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #E0D9CF;
+  border-top-color: #F97316;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.output-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.87rem;
+  line-height: 1.75;
+  color: #1A1A1A;
+  white-space: pre-wrap;
+  word-break: break-word;
+  width: 100%;
+}

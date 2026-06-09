@@ -38,7 +38,8 @@ def generate_copy():
     Use the product name only as a reference. The copy should be driven by the main focus, product info, and 
     target audience — not the name itself
     
-    Keep a predictable pattern, Do not write 'Copy:' or 'Body:' etc. You are generating for copied usage."""
+    Keep a predictable pattern, Do not write 'Copy:' or 'Body:' etc. You are generating for copied usage.
+    -- No markdown formatting as it needs to be directly copyable"""
 
     response = client.chat.completions.create(
         model = 'openai/gpt-oss-120b',

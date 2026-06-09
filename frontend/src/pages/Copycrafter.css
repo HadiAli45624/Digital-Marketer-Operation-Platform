@@ -1,0 +1,331 @@
+.copy-page {
+  max-width: 1100px;
+}
+
+/* ── LAYOUT ── */
+.copy-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .copy-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── CHIP SELECTORS ── */
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 20px;
+  padding: 0.4rem 0.9rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.chip.selected {
+  background: #FFF0E6;
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.chip-sm {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.75rem;
+}
+
+/* ── COPIES SELECTOR ── */
+.copies-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.copies-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #E0D9CF;
+  background: #FAF7F2;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #6B6560;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copies-btn:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.copies-btn.selected {
+  background: #FFF0E6;
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.copies-input {
+  width: 80px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  color: #1A1A1A;
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.copies-input:focus {
+  border-color: #F97316;
+  background: #fff;
+}
+
+/* ── MORE OPTIONS ── */
+.more-options-content {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── OUTPUT ── */
+.copy-output-col {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.empty-box {
+  background: #fff;
+  border: 1px solid #E0D9CF;
+  border-radius: 14px;
+  padding: 1.5rem;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.output-placeholder {
+  font-size: 0.88rem;
+  color: #B0A99F;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  text-align: center;
+}
+
+.output-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 0;
+}
+
+.output-loading p {
+  font-size: 0.88rem;
+  color: #6B6560;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── COPIES LIST ── */
+.copies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.copy-card {
+  background: #fff;
+  border: 1px solid #E0D9CF;
+  border-radius: 14px;
+  padding: 1.25rem 1.4rem;
+  transition: box-shadow 0.2s;
+}
+
+.copy-card:hover {
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.07);
+}
+
+.copy-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.copy-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #F97316;
+}
+
+.copy-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: #1A1A1A;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* shared with ReportGenerator */
+.form-section {
+  background: #fff;
+  border: 1px solid #E0D9CF;
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4A4540;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  color: #1A1A1A;
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #F97316;
+  background: #fff;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #B0A99F;
+}
+
+.more-options-btn {
+  background: none;
+  border: 1px dashed #E0D9CF;
+  border-radius: 8px;
+  width: 100%;
+  padding: 0.6rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.more-options-btn:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.form-error {
+  font-size: 0.83rem;
+  color: #E53E3E;
+  margin-bottom: 0.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.btn-submit {
+  width: 100%;
+  background: #F97316;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover:not(:disabled) { background: #EA6A0A; }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.copy-btn {
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 7px;
+  padding: 0.35rem 0.85rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.copy-btn:hover {
+  border-color: #F97316;
+  color: #F97316;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #E0D9CF;
+  border-top-color: #F97316;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

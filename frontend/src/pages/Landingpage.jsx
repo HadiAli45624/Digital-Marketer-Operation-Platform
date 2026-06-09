@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 
-export default function LandingPage({ onEnterApp }) {
+export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="landing">
@@ -15,7 +17,7 @@ export default function LandingPage({ onEnterApp }) {
         </div>
         <div className="landing-nav-right">
           <button className="btn-ghost">Login</button>
-          <button className="btn-orange" onClick={onEnterApp}>
+          <button className="btn-orange" onClick={() => navigate("/dashboard")}>
             Get Started
           </button>
         </div>
@@ -36,7 +38,7 @@ export default function LandingPage({ onEnterApp }) {
             teams that move fast.
           </p>
           <div className="landing-hero-cta">
-            <button className="btn-orange btn-lg" onClick={onEnterApp}>
+            <button className="btn-orange btn-lg" onClick={() => navigate("/dashboard")}>
               Open Dashboard
             </button>
             <button className="btn-outline btn-lg">See how it works</button>
@@ -93,7 +95,7 @@ export default function LandingPage({ onEnterApp }) {
       {/* CTA STRIP */}
       <section className="landing-cta-strip">
         <h2>Ready to simplify your workflow?</h2>
-        <button className="btn-orange btn-lg" onClick={onEnterApp}>
+        <button className="btn-orange btn-lg" onClick={() => navigate("/dashboard")}>
           Open Qwilio
         </button>
       </section>

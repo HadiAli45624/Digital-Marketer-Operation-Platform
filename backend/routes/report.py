@@ -10,7 +10,7 @@ report = Blueprint('report', __name__)
 
 @report.route('/project_report', methods=['GET', 'POST'])
 def report_generate():
-    client = Groq(api_key='GROQ_API_KEY')
+    client = Groq(api_key=GROQ_API_KEY)
     data = request.get_json()
 
     name = data.get('name', '')
@@ -72,7 +72,7 @@ def report_generate():
     - Tone should be confident and analytical, not robotic
     - Do not use filler phrases like 'it is important to note'"""
 
-    response = client.chats.completions.create(
+    response = client.chat.completions.create(
         model='openai/gpt-oss-120b', 
         messages = [{'role': 'user', 'content' : text}]
     )

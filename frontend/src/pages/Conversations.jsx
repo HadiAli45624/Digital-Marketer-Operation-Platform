@@ -30,6 +30,7 @@ export default function Conversations() {
   const [draft, setDraft] = useState("");
   const [draftTone, setDraftTone] = useState("");
   const [showDraftOptions, setShowDraftOptions] = useState(false);
+  const [activeTab, setActiveTab] = useState('summary');
 
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [loadingPending, setLoadingPending] = useState(false);
@@ -113,59 +114,79 @@ export default function Conversations() {
     }
   };
 
+  // ── DELETE MESSAGE ──
+const handleDeleteMessage = async (messageId) => {
+  try {
+    await fetch(`${BASE_URL}/clients/${selectedClient.id}/messages/${messageId}`, {
+      method: 'DELETE',
+    });
+    fetchMessages(selectedClient.id);
+  } catch {
+    setError('Failed to delete message.');
+  }
+};
+
+// ── DELETE CLIENT ──
+const handleDeleteClient = async (clientId) => {
+  try {
+    await fetch(`${BASE_URL}/clients/${clientId}`, { method: 'DELETE' });
+    setSelectedClient(null);
+    setMessages([]);
+    fetchClients();
+  } catch {
+    setError('Failed to delete client.');
+  }
+};
+
   // ── AI ACTIONS ──
   const handleSummarize = async () => {
-    setLoadingSummary(true);
-    setSummary("");
-    try {
-      const res = await fetch(
-        `${BASE_URL}/clients/${selectedClient.id}/summarize`
-      );
-      const data = await res.json();
-      setSummary(data.summary);
-    } catch {
-      setError("Failed to generate summary.");
-    } finally {
-      setLoadingSummary(false);
-    }
-  };
+  setLoadingSummary(true);
+  setSummary("");
+  setActiveTab("summary");
+  try {
+    const res = await fetch(`${BASE_URL}/clients/${selectedClient.id}/summarize`);
+    const data = await res.json();
+    setSummary(data.summary);
+  } catch {
+    setError("Failed to generate summary.");
+  } finally {
+    setLoadingSummary(false);
+  }
+};
 
-  const handlePending = async () => {
-    setLoadingPending(true);
-    setPending("");
-    try {
-      const res = await fetch(
-        `${BASE_URL}/clients/${selectedClient.id}/pending`
-      );
-      const data = await res.json();
-      setPending(data.pending);
-    } catch {
-      setError("Failed to get pending tasks.");
-    } finally {
-      setLoadingPending(false);
-    }
-  };
+const handlePending = async () => {
+  setLoadingPending(true);
+  setPending("");
+  setActiveTab("pending");
+  try {
+    const res = await fetch(`${BASE_URL}/clients/${selectedClient.id}/pending`);
+    const data = await res.json();
+    setPending(data.pending);
+  } catch {
+    setError("Failed to get pending tasks.");
+  } finally {
+    setLoadingPending(false);
+  }
+};
 
-  const handleDraft = async () => {
-    setLoadingDraft(true);
-    setDraft("");
-    try {
-      const res = await fetch(
-        `${BASE_URL}/clients/${selectedClient.id}/draft`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ tone: draftTone }),
-        }
-      );
-      const data = await res.json();
-      setDraft(data.draft);
-    } catch {
-      setError("Failed to generate draft.");
-    } finally {
-      setLoadingDraft(false);
-    }
-  };
+const handleDraft = async () => {
+  setLoadingDraft(true);
+  setDraft("");
+  setActiveTab("draft");
+  try {
+    const res = await fetch(`${BASE_URL}/clients/${selectedClient.id}/draft`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tone: draftTone }),
+    });
+    const data = await res.json();
+    setDraft(data.draft);
+  } catch {
+    setError("Failed to generate draft.");
+  } finally {
+    setLoadingDraft(false);
+  }
+};
 
   const copyText = (text) => navigator.clipboard.writeText(text);
 
@@ -218,24 +239,25 @@ export default function Conversations() {
                 <p className="empty-hint">No clients yet. Add one above.</p>
               )}
               {clients.map((c) => (
-                <div
-                  key={c.id}
-                  className={`client-item ${
-                    selectedClient?.id === c.id ? "active" : ""
-                  }`}
-                  onClick={() => selectClient(c)}
-                >
-                  <div className="client-avatar">
-                    {c.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="client-info">
-                    <span className="client-name">{c.name}</span>
-                    {c.email && (
-                      <span className="client-email">{c.email}</span>
-                    )}
-                  </div>
+              <div
+                key={c.id}
+                className={`client-item ${selectedClient?.id === c.id ? 'active' : ''}`}
+                onClick={() => selectClient(c)}
+              >
+                <div className="client-avatar">{c.name.charAt(0).toUpperCase()}</div>
+                <div className="client-info">
+                  <span className="client-name">{c.name}</span>
+                  {c.email && <span className="client-email">{c.email}</span>}
                 </div>
-              ))}
+                <button
+                  className="delete-btn"
+                  onClick={(e) => { e.stopPropagation(); handleDeleteClient(c.id); }}
+                  title="Delete client"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
             </div>
           </div>
 
@@ -337,6 +359,13 @@ export default function Conversations() {
                       <div className="bubble-meta">
                         <span className="bubble-source">{msg.source}</span>
                         <span className="bubble-dir">{msg.direction}</span>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDeleteMessage(msg.id)}
+                          title="Delete message"
+                        >
+                          ×
+                        </button>
                       </div>
                       <p className="bubble-content">{msg.content}</p>
                     </div>
@@ -397,52 +426,32 @@ export default function Conversations() {
                       </div>
                     )}
 
-                    {/* AI Outputs */}
-                    {summary && (
-                      <div className="ai-output-card">
-                        <div className="ai-output-header">
-                          <span className="ai-output-label">Summary</span>
-                          <button
-                            className="copy-btn"
-                            onClick={() => copyText(summary)}
-                          >
-                            Copy
-                          </button>
+                {/* AI Outputs */}
+                    {(summary || pending || draft) && (
+                      <div className="ai-output-tabs">
+                        <div className="tab-bar">
+                          {summary && <button className={`tab-btn ${activeTab === 'summary' ? 'active' : ''}`} onClick={() => setActiveTab('summary')}>Summary</button>}
+                          {pending && <button className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`} onClick={() => setActiveTab('pending')}>Pending Tasks</button>}
+                          {draft && <button className={`tab-btn ${activeTab === 'draft' ? 'active' : ''}`} onClick={() => setActiveTab('draft')}>Draft Reply</button>}
                         </div>
-                        <div className="ai-output-text"><ReactMarkdown>{summary}</ReactMarkdown></div>
-                      </div>
-                    )}
 
-                    {pending && (
-                      <div className="ai-output-card">
-                        <div className="ai-output-header">
-                          <span className="ai-output-label">Pending Tasks</span>
-                          <button
-                            className="copy-btn"
-                            onClick={() => copyText(pending)}
-                          >
-                            Copy
-                          </button>
+                        <div className="ai-output-card">
+                          <div className="ai-output-header">
+                            <span className="ai-output-label">
+                              {activeTab === 'summary' ? 'Summary' : activeTab === 'pending' ? 'Pending Tasks' : 'Draft Reply'}
+                            </span>
+                            <button className="copy-btn" onClick={() => copyText(activeTab === 'summary' ? summary : activeTab === 'pending' ? pending : draft)}>
+                              Copy
+                            </button>
+                          </div>
+                          <div className="ai-output-text">
+                            <ReactMarkdown>
+                              {activeTab === 'summary' ? summary : activeTab === 'pending' ? pending : draft}
+                            </ReactMarkdown>
+                          </div>
                         </div>
-                        <div className="ai-output-text"> <ReactMarkdown>{pending}</ReactMarkdown> </div>
                       </div>
-                    )}
-
-                    {draft && (
-                      <div className="ai-output-card">
-                        <div className="ai-output-header">
-                          <span className="ai-output-label">Draft Reply</span>
-                          <button
-                            className="copy-btn"
-                            onClick={() => copyText(draft)}
-                          >
-                            Copy
-                          </button>
-                        </div>
-                        <div className="ai-output-text"> <ReactMarkdown className="ai-output-text">{draft}</ReactMarkdown></div>
-                      </div>
-                    )}
-                  </div>
+                    )}</div>
                 )}
               </>
             )}

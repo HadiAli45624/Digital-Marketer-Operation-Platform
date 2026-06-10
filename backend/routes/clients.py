@@ -131,7 +131,8 @@ def access_pending(client_id):
 def generate_draft(client_id):
     client = Groq(api_key=GROQ_API_KEY)
     messages = Message.query.filter_by(client_id=client_id).all()
-    
+    clients = Client.query.get(client_id)
+
     msg_text = ''
     for i, msg in enumerate(messages, 1):
         msg_text += f"""Message {i}:
@@ -143,17 +144,20 @@ def generate_draft(client_id):
                 {msg.content}
         
         """
-
-    tone = request.get_json('tone', '')
+    data = request.get_json()
+    tone = data.get('tone', '')
 
     text = f"""You are a conversational analyst for the owner of Digital Marketing Firm
         Your job is to analyze these messages and create a professional draft message that the owner can send.
         
+        Client Name = {clients.name}
+
         {msg_text}
 
         -Create an executive tone draft reply for said platform
         -Tone should {tone}
         -Minimal use of emojis
+        -Do not write a headline like "Draft Message". This should be a ready to copy message without any Bold or special characters.
         """
 
     pending = client.chat.completions.create(
@@ -161,4 +165,29 @@ def generate_draft(client_id):
     messages= [{'role' : 'user', 'content': text}]
     )
 
-    return jsonify({'draft': pending.choices[0].message.content})
+    return jsonify({'draft': pending.choices[0].message.content}), 200
+
+@clients.route('/clients/<client_id>/messages/<message_id>', methods=['DELETE'])
+def delete_message(client_id, message_id):
+    msg = Message.query.filter_by(id=message_id, client_id=client_id).first()
+
+    if not msg:
+        return jsonify({'error': 'Message not found'}), 404
+
+    db.session.delete(msg)
+    db.session.commit()
+
+    return jsonify({'message': 'Deleted successfully'}), 200
+
+@clients.route('/clients/<client_id>', methods=['DELETE'])
+def delete_client(client_id):
+    client = Client.query.get(client_id)
+
+    if not client:
+        return jsonify({'error': 'Client not found'}), 404
+
+    Message.query.filter_by(client_id=client_id).delete()  # delete messages first
+    db.session.delete(client)
+    db.session.commit()
+
+    return jsonify({'message': 'Client deleted'}), 200

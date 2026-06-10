@@ -247,8 +247,24 @@
 .bubble-meta {
   display: flex;
   gap: 0.5rem;
+  align-items: center;       /* add this */
   margin-bottom: 0.35rem;
+  width: 100%;               /* add this — pushes × to the right */
 }
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #B0A99F;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  margin-left: auto;
+  transition: color 0.15s;
+}
+
+.delete-btn:hover { color: #E53E3E; }
 
 .bubble-source {
   font-size: 0.7rem;
@@ -501,4 +517,36 @@
   font-size: 0.93rem;
   color: #6B6560;
   line-height: 1.6;
+}
+
+.ai-output-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tab-bar {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.tab-btn {
+  background: #FAF7F2;
+  border: 1px solid #E0D9CF;
+  border-radius: 8px;
+  padding: 0.35rem 0.85rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6B6560;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab-btn:hover { border-color: #F97316; color: #F97316; }
+
+.tab-btn.active {
+  background: #FFF0E6;
+  border-color: #F97316;
+  color: #F97316;
 }

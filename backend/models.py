@@ -2,11 +2,13 @@ from db import db
 from datetime import datetime
 
 class Client(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable =True)
-    created_at = db.Column(db.DateTime, default = datetime.utcnow)
+    email = db.Column(db.String(100), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    messages = db.relationship('Message', backref='client', cascade='all, delete-orphan')
+    
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable = False)
